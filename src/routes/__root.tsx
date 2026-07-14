@@ -79,13 +79,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "A4MP RAG AI — Your Personal Knowledge Assistant" },
+      { title: "POLAMREDDY AJAY KUMAR" },
       { name: "description", content: "Upload your documents and chat with an AI that cites the exact sources it used. Advanced Retrieval-Augmented Generation for your personal library." },
       { name: "author", content: "A4MP" },
-      { property: "og:title", content: "A4MP RAG AI — Your Personal Knowledge Assistant" },
-      { property: "og:description", content: "Chat with your own documents. AI answers grounded in your library with source citations." },
+      { property: "og:title", content: "POLAMREDDY AJAY KUMAR" },
+      { property: "og:description", content: "Upload your documents and chat with an AI that cites the exact sources it used. Advanced Retrieval-Augmented Generation for your personal library." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "POLAMREDDY AJAY KUMAR" },
+      { name: "twitter:description", content: "Upload your documents and chat with an AI that cites the exact sources it used. Advanced Retrieval-Augmented Generation for your personal library." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/9d811a10-fb8d-4363-8889-b9fa8cc83df7" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/9d811a10-fb8d-4363-8889-b9fa8cc83df7" },
     ],
     links: [
       {
