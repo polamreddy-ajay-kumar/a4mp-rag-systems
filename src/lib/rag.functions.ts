@@ -117,7 +117,8 @@ export const askQuestion = createServerFn({ method: "POST" })
     const { data: matches, error: matchErr } = await supabase.rpc("match_document_chunks", {
       query_embedding: `[${queryEmbedding.join(",")}]` as unknown as string,
       match_count: 6,
-      filter_document_ids: data.documentIds && data.documentIds.length > 0 ? data.documentIds : null,
+      filter_document_ids:
+        data.documentIds && data.documentIds.length > 0 ? data.documentIds : (undefined as unknown as string[]),
     });
     if (matchErr) throw new Error(`Retrieval failed: ${matchErr.message}`);
     const chunks = (matches ?? []) as Array<{
