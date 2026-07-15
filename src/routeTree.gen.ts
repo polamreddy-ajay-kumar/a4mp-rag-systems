@@ -15,6 +15,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedDocumentsRouteImport } from './routes/_authenticated/documents'
 import { Route as AuthenticatedAppRouteImport } from './routes/_authenticated/app'
+import { Route as AuthenticatedAppIndexRouteImport } from './routes/_authenticated/app.index'
 import { Route as AuthenticatedAppConversationIdRouteImport } from './routes/_authenticated/app.$conversationId'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -46,6 +47,11 @@ const AuthenticatedAppRoute = AuthenticatedAppRouteImport.update({
   path: '/app',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAppIndexRoute = AuthenticatedAppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedAppRoute,
+} as any)
 const AuthenticatedAppConversationIdRoute =
   AuthenticatedAppConversationIdRouteImport.update({
     id: '/$conversationId',
@@ -60,14 +66,15 @@ export interface FileRoutesByFullPath {
   '/app': typeof AuthenticatedAppRouteWithChildren
   '/documents': typeof AuthenticatedDocumentsRoute
   '/app/$conversationId': typeof AuthenticatedAppConversationIdRoute
+  '/app/': typeof AuthenticatedAppIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/app': typeof AuthenticatedAppRouteWithChildren
   '/documents': typeof AuthenticatedDocumentsRoute
   '/app/$conversationId': typeof AuthenticatedAppConversationIdRoute
+  '/app': typeof AuthenticatedAppIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -78,6 +85,7 @@ export interface FileRoutesById {
   '/_authenticated/app': typeof AuthenticatedAppRouteWithChildren
   '/_authenticated/documents': typeof AuthenticatedDocumentsRoute
   '/_authenticated/app/$conversationId': typeof AuthenticatedAppConversationIdRoute
+  '/_authenticated/app/': typeof AuthenticatedAppIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -88,14 +96,15 @@ export interface FileRouteTypes {
     | '/app'
     | '/documents'
     | '/app/$conversationId'
+    | '/app/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
     | '/sitemap.xml'
-    | '/app'
     | '/documents'
     | '/app/$conversationId'
+    | '/app'
   id:
     | '__root__'
     | '/'
@@ -105,6 +114,7 @@ export interface FileRouteTypes {
     | '/_authenticated/app'
     | '/_authenticated/documents'
     | '/_authenticated/app/$conversationId'
+    | '/_authenticated/app/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -158,6 +168,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/app/': {
+      id: '/_authenticated/app/'
+      path: '/'
+      fullPath: '/app/'
+      preLoaderRoute: typeof AuthenticatedAppIndexRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
     '/_authenticated/app/$conversationId': {
       id: '/_authenticated/app/$conversationId'
       path: '/$conversationId'
@@ -170,10 +187,12 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedAppRouteChildren {
   AuthenticatedAppConversationIdRoute: typeof AuthenticatedAppConversationIdRoute
+  AuthenticatedAppIndexRoute: typeof AuthenticatedAppIndexRoute
 }
 
 const AuthenticatedAppRouteChildren: AuthenticatedAppRouteChildren = {
   AuthenticatedAppConversationIdRoute: AuthenticatedAppConversationIdRoute,
+  AuthenticatedAppIndexRoute: AuthenticatedAppIndexRoute,
 }
 
 const AuthenticatedAppRouteWithChildren =
