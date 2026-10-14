@@ -25,7 +25,7 @@ function Landing() {
       <section className="relative isolate overflow-hidden border-b border-border">
         <img src={sculpture} alt="Precision glass architecture with illuminated emerald layers" width={1536} height={1024} className="hero-media" />
         <div className="hero-shade" />
-        <div className="relative mx-auto max-w-7xl px-5 py-16 sm:px-8 sm:py-24 lg:py-28">
+        <div className="relative mx-auto max-w-7xl px-5 py-9 sm:px-8 sm:py-16 lg:py-20">
           <div className="page-enter max-w-xl">
             <div className="mb-7 flex items-center gap-2 text-xs font-medium text-primary"><span className="size-1.5 rounded-full bg-primary" /> PERSONAL KNOWLEDGE INTELLIGENCE</div>
             <h1 className="text-4xl font-medium leading-[1.12] text-hero-foreground sm:text-6xl">A4MP<br />RAG SYSTEMS<span className="text-primary">.</span></h1>
