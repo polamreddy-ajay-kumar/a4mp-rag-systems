@@ -8,3 +8,6 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Use the shared Brand component for visible app identity so the wordmark remains consistent across pages.
+- Keep visual roles in src/styles.css and page metadata in the shared pageMeta helper so appearance and page identity stay coherent.
