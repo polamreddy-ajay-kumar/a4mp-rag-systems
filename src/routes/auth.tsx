@@ -7,14 +7,17 @@ import { lovable } from "@/integrations/lovable";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { BookOpen, Loader2 } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, ShieldCheck, Loader2 } from "lucide-react";
+
+import { Brand } from "@/components/Brand";
+import { pageMeta } from "@/lib/page-meta";
 
 const searchSchema = z.object({ mode: z.enum(["signin", "signup"]).optional() });
 
 export const Route = createFileRoute("/auth")({
   validateSearch: (s) => searchSchema.parse(s),
   component: AuthPage,
-  head: () => ({ meta: [{ title: "Sign in — A4MP RAG AI" }] }),
+  head: () => pageMeta("Sign in", "Sign in to your private A4MP RAG SYSTEMS document and chat workspace."),
 });
 
 function AuthPage() {
@@ -72,22 +75,18 @@ function AuthPage() {
   };
 
   return (
-    <div className="min-h-screen grid place-items-center bg-secondary/40 px-4">
+    <div className="min-h-screen grid place-items-center bg-background px-5 py-10">
       <div className="w-full max-w-sm space-y-6">
-        <Link to="/" className="flex items-center justify-center gap-2 font-semibold">
-          <div className="grid h-8 w-8 place-items-center rounded-md bg-primary text-primary-foreground">
-            <BookOpen className="h-4 w-4" />
-          </div>
-          A4MP RAG AI
-        </Link>
+        <Link to="/" className="flex justify-center"><Brand /></Link>
+        <div className="flex justify-center"><Button asChild variant="ghost" size="sm"><Link to="/"><ArrowLeft /> Back to home</Link></Button></div>
 
-        <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
+        <div className="rounded-lg border border-border bg-card p-6 sm:p-8">
           <h1 className="text-xl font-semibold">
             {mode === "signup" ? "Create your account" : "Welcome back"}
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
             {mode === "signup"
-              ? "Start building your personal knowledge base."
+              ? "Your personal knowledge starts here."
               : "Sign in to keep chatting with your documents."}
           </p>
 
@@ -125,15 +124,17 @@ function AuthPage() {
 
           <p className="mt-6 text-center text-sm text-muted-foreground">
             {mode === "signup" ? "Already have an account?" : "New here?"}{" "}
-            <button
+            <Button
+              variant="link"
               type="button"
-              className="font-medium text-foreground underline underline-offset-4"
+              className="h-auto p-0 font-medium"
               onClick={() => setMode(mode === "signup" ? "signin" : "signup")}
             >
               {mode === "signup" ? "Sign in" : "Create an account"}
-            </button>
+            </Button>
           </p>
         </div>
+        <p className="flex items-center justify-center gap-2 text-xs text-muted-foreground"><ShieldCheck className="size-3.5" /> Your library stays private.</p>
       </div>
     </div>
   );
