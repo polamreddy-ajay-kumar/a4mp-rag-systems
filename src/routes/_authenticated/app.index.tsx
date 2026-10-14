@@ -1,9 +1,11 @@
+import { pageMeta } from "@/lib/page-meta";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/app/")({
+  head: () => pageMeta("Workspace", "Your personal A4MP RAG SYSTEMS knowledge workspace."),
   component: AppEntry,
 });
 

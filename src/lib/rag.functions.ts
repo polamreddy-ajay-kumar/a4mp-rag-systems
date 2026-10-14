@@ -1,4 +1,4 @@
-// A4MP RAG AI — server functions for embedding, retrieval, and chat.
+// A4MP RAG SYSTEMS — server functions for embedding, retrieval, and chat.
 //
 // All functions run only for authenticated users (requireSupabaseAuth
 // middleware) and use an RLS-scoped Supabase client, so each user only
@@ -148,7 +148,7 @@ export const askQuestion = createServerFn({ method: "POST" })
           .join("\n\n---\n\n")
       : "(No relevant documents were found in the user's library.)";
 
-    const systemPrompt = `You are A4MP RAG AI, a helpful personal knowledge assistant.
+    const systemPrompt = `You are A4MP RAG SYSTEMS, a helpful personal knowledge assistant.
 You answer using ONLY the provided sources from the user's document library.
 
 Rules:

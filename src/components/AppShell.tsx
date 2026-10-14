@@ -1,12 +1,14 @@
 import { Link, useNavigate, useRouter } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { BookOpen, MessageSquarePlus, LogOut, Files, Loader2, Trash2 } from "lucide-react";
+import { MessageSquarePlus, LogOut, Files, Loader2, Trash2, Menu, X, MessageSquare, ShieldCheck, ChevronRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { createConversation } from "@/lib/rag.functions";
 import { useServerFn } from "@tanstack/react-start";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+
+import { Brand } from "@/components/Brand";
 
 type Convo = { id: string; title: string; updated_at: string };
 
@@ -15,6 +17,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const [convos, setConvos] = useState<Convo[]>([]);
   const [email, setEmail] = useState<string>("");
+  const [menuOpen, setMenuOpen] = useState(false);
   const [busy, setBusy] = useState(false);
   const createFn = useServerFn(createConversation);
   const currentPath = router.state.location.pathname;
@@ -28,6 +31,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   };
 
   useEffect(() => {
+    setMenuOpen(false);
     load();
     supabase.auth.getUser().then(({ data }) => setEmail(data.user?.email ?? ""));
   }, [currentPath]);
@@ -58,80 +62,33 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <div className="grid min-h-screen grid-cols-[280px_1fr] bg-secondary/40">
-      {/* Sidebar */}
-      <aside className="flex h-screen flex-col border-r border-sidebar-border bg-sidebar text-sidebar-foreground">
-        <div className="flex items-center gap-2 border-b border-sidebar-border px-4 py-4">
-          <div className="grid h-8 w-8 place-items-center rounded-md bg-sidebar-primary text-sidebar-primary-foreground">
-            <BookOpen className="h-4 w-4" />
-          </div>
-          <div className="text-sm font-semibold">A4MP RAG AI</div>
-        </div>
-
-        <div className="p-3">
-          <Button onClick={newChat} disabled={busy} className="w-full justify-start gap-2" variant="secondary">
-            {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <MessageSquarePlus className="h-4 w-4" />}
-            New chat
-          </Button>
-        </div>
-
-        <nav className="px-3 pb-2">
-          <Link
-            to="/documents"
-            className={cn(
-              "flex items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-sidebar-accent",
-              currentPath.startsWith("/documents") && "bg-sidebar-accent",
-            )}
-          >
-            <Files className="h-4 w-4" /> Documents
-          </Link>
+    <div className="flex h-dvh overflow-hidden bg-background">
+      {menuOpen && <div className="fixed inset-0 z-30 bg-background/80 backdrop-blur-sm md:hidden" onClick={() => setMenuOpen(false)} />}
+      <aside className={cn("fixed inset-y-0 left-0 z-40 flex w-[260px] flex-col border-r border-sidebar-border bg-sidebar text-sidebar-foreground transition-transform md:static md:translate-x-0", menuOpen ? "translate-x-0" : "-translate-x-full")}>
+        <div className="flex items-center justify-between px-5 py-6"><Link to="/"><Brand compact /></Link><Button variant="ghost" size="icon" className="md:hidden" aria-label="Close menu" onClick={() => setMenuOpen(false)}><X /></Button></div>
+        <div className="px-4 pb-5"><Button onClick={newChat} disabled={busy} className="w-full justify-start gap-3">{busy ? <Loader2 className="size-4 animate-spin" /> : <MessageSquarePlus />} New conversation</Button></div>
+        <nav className="space-y-1 px-3">
+          <Button asChild variant="ghost" className={cn("w-full justify-start text-muted-foreground", currentPath.startsWith("/app") && "bg-sidebar-accent text-foreground")}><Link to="/app"><MessageSquare /> Workspace</Link></Button>
+          <Button asChild variant="ghost" className={cn("w-full justify-start text-muted-foreground", currentPath.startsWith("/documents") && "bg-sidebar-accent text-foreground")}><Link to="/documents"><Files /> Document library</Link></Button>
         </nav>
-
-        <div className="px-4 pt-4 pb-2 text-[10px] uppercase tracking-wider text-sidebar-foreground/60">
-          Conversations
+        <div className="mx-5 mt-6 flex items-center justify-between border-t border-sidebar-border pt-6 pb-3 text-[10px] font-medium text-muted-foreground"><span>RECENT CONVERSATIONS</span><span>{convos.length.toString().padStart(2, "0")}</span></div>
+        <div className="flex-1 space-y-1 overflow-y-auto px-3">
+          {convos.map((c) => <div key={c.id} className={cn("group flex items-center rounded-md text-sm hover:bg-sidebar-accent", currentPath.endsWith(c.id) && "bg-sidebar-accent")}>
+            <Link to="/app/$conversationId" params={{ conversationId: c.id }} className="flex min-w-0 flex-1 items-center gap-2 px-3 py-2.5"><MessageSquare className="size-3.5 shrink-0 text-muted-foreground" /><span className="truncate">{c.title || "Untitled"}</span></Link>
+            <Button aria-label="Delete conversation" title="Delete conversation" variant="ghost" size="icon" className="size-7 shrink-0 text-muted-foreground md:opacity-0 md:group-hover:opacity-100 focus:opacity-100" onClick={() => del(c.id)}><Trash2 className="size-3.5" /></Button>
+          </div>)}
+          {convos.length === 0 && <p className="px-3 py-2 text-xs text-muted-foreground">No conversations yet</p>}
         </div>
-        <div className="flex-1 space-y-0.5 overflow-y-auto px-2">
-          {convos.map((c) => {
-            const active = currentPath.endsWith(c.id);
-            return (
-              <div
-                key={c.id}
-                className={cn(
-                  "group flex items-center gap-1 rounded-md px-2 text-sm hover:bg-sidebar-accent",
-                  active && "bg-sidebar-accent",
-                )}
-              >
-                <Link
-                  to="/app/$conversationId"
-                  params={{ conversationId: c.id }}
-                  className="flex-1 truncate py-2"
-                >
-                  {c.title || "Untitled"}
-                </Link>
-                <button
-                  aria-label="Delete conversation"
-                  className="opacity-0 group-hover:opacity-100 p-1 text-sidebar-foreground/60 hover:text-destructive"
-                  onClick={() => del(c.id)}
-                >
-                  <Trash2 className="h-3.5 w-3.5" />
-                </button>
-              </div>
-            );
-          })}
-          {convos.length === 0 && (
-            <p className="px-3 py-2 text-xs text-sidebar-foreground/50">No chats yet</p>
-          )}
-        </div>
-
-        <div className="border-t border-sidebar-border p-3">
-          <div className="mb-2 truncate px-2 text-xs text-sidebar-foreground/70">{email}</div>
-          <Button onClick={signOut} variant="ghost" size="sm" className="w-full justify-start gap-2 text-sidebar-foreground/80 hover:text-sidebar-foreground">
-            <LogOut className="h-4 w-4" /> Sign out
-          </Button>
-        </div>
+        <div className="mx-5 mb-5 flex items-center gap-2 border-t border-sidebar-border pt-5 text-xs text-muted-foreground"><ShieldCheck className="size-4 text-primary" /> Private workspace</div>
+        <div className="flex items-center gap-3 border-t border-sidebar-border px-4 py-4"><span className="grid size-8 shrink-0 place-items-center rounded-md bg-secondary font-display text-sm text-primary">{email.charAt(0).toUpperCase() || "A"}</span><div className="min-w-0 flex-1"><p className="truncate text-xs font-medium">{email || "Your account"}</p><p className="mt-1 text-[10px] text-muted-foreground">Personal workspace</p></div><Button onClick={signOut} variant="ghost" size="icon" aria-label="Sign out" title="Sign out" className="size-8 text-muted-foreground"><LogOut /></Button></div>
       </aside>
-
-      <main className="flex h-screen flex-col overflow-hidden">{children}</main>
+      <main className="flex min-w-0 flex-1 flex-col overflow-hidden">
+        <header className="flex h-16 shrink-0 items-center justify-between gap-3 border-b border-border px-4 sm:px-8">
+          <div className="flex min-w-0 items-center gap-3"><Button variant="ghost" size="icon" aria-label="Open menu" onClick={() => setMenuOpen(true)} className="md:hidden"><Menu /></Button><span className="hidden text-xs text-muted-foreground sm:inline">Workspace</span><ChevronRight className="hidden size-3 text-muted-foreground sm:block" /><span className="truncate text-sm font-medium">{currentPath.startsWith("/documents") ? "Document library" : "Knowledge chat"}</span></div>
+          <span className="flex shrink-0 items-center gap-2 text-[10px] text-muted-foreground sm:text-xs"><span className="size-1.5 rounded-full bg-primary" /> A4MP RAG SYSTEMS</span>
+        </header>
+        {children}
+      </main>
     </div>
   );
 }

@@ -6,6 +6,7 @@ import {
   useRouter,
   HeadContent,
   Scripts,
+  type ErrorComponentProps,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
@@ -36,11 +37,11 @@ function NotFoundComponent() {
   );
 }
 
-function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
+function ErrorComponent({ error, reset }: ErrorComponentProps) {
   console.error(error);
   const router = useRouter();
   useEffect(() => {
-    reportLovableError(error, { boundary: "tanstack_root_error_component" });
+    reportLovableError(error instanceof Error ? error : new Error(String(error)), { boundary: "tanstack_root_error_component" });
   }, [error]);
 
   return (
@@ -79,24 +80,23 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "POLAMREDDY AJAY KUMAR" },
+      { title: "A4MP RAG SYSTEMS" },
       { name: "description", content: "Upload your documents and chat with an AI that cites the exact sources it used. Advanced Retrieval-Augmented Generation for your personal library." },
       { name: "author", content: "A4MP" },
-      { property: "og:title", content: "POLAMREDDY AJAY KUMAR" },
+      { property: "og:title", content: "A4MP RAG SYSTEMS" },
       { property: "og:description", content: "Upload your documents and chat with an AI that cites the exact sources it used. Advanced Retrieval-Augmented Generation for your personal library." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "POLAMREDDY AJAY KUMAR" },
+      { name: "twitter:title", content: "A4MP RAG SYSTEMS" },
       { name: "twitter:description", content: "Upload your documents and chat with an AI that cites the exact sources it used. Advanced Retrieval-Augmented Generation for your personal library." },
-      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/9d811a10-fb8d-4363-8889-b9fa8cc83df7" },
-      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/9d811a10-fb8d-4363-8889-b9fa8cc83df7" },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" },
     ],
   }),
   shellComponent: RootShell,

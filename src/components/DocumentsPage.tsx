@@ -5,7 +5,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { parseFile, chunkText } from "@/lib/document-parser";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { FileText, Upload, Loader2, Trash2, CheckCircle2, AlertCircle } from "lucide-react";
+import { FileText, Upload, Loader2, Trash2, CheckCircle2, AlertCircle, Library, ShieldCheck } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 
 type Doc = {
@@ -92,22 +92,28 @@ export function DocumentsPage() {
 
   return (
     <div className="flex-1 overflow-y-auto">
-      <div className="mx-auto max-w-4xl px-6 py-8">
-        <header className="mb-6">
-          <h1 className="text-2xl font-semibold">Documents</h1>
-          <p className="text-sm text-muted-foreground">
-            PDF, DOCX, and TXT files. Parsed and embedded into your private vector library.
+      <div className="mx-auto max-w-5xl px-4 py-8 sm:px-8 sm:py-12">
+        <header className="mb-8">
+          <p className="mb-3 text-xs text-primary">YOUR KNOWLEDGE COLLECTION</p>
+          <h1 className="text-3xl font-medium">Documents</h1>
+          <p className="mt-3 text-sm text-muted-foreground">
+            A personal collection. A clearer perspective.
           </p>
         </header>
 
         <div
+          role="button"
+          tabIndex={uploading ? -1 : 0}
+          aria-label="Upload documents"
+          aria-disabled={uploading}
+          onKeyDown={(e) => { if (!uploading && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); inputRef.current?.click(); } }}
           onClick={() => !uploading && inputRef.current?.click()}
           onDragOver={(e) => e.preventDefault()}
           onDrop={(e) => {
             e.preventDefault();
             if (e.dataTransfer.files.length) void handleFiles(e.dataTransfer.files);
           }}
-          className="cursor-pointer rounded-2xl border-2 border-dashed border-border bg-card p-10 text-center transition-colors hover:border-accent"
+          className="cursor-pointer rounded-lg border border-dashed border-border bg-card p-10 text-center transition-colors hover:border-primary"
         >
           <input
             ref={inputRef}
@@ -117,20 +123,21 @@ export function DocumentsPage() {
             accept=".pdf,.docx,.txt,.md,application/pdf,text/plain"
             onChange={(e) => e.target.files && handleFiles(e.target.files)}
           />
-          <div className="mx-auto grid h-12 w-12 place-items-center rounded-xl bg-accent/15 text-accent">
+          <div className="mx-auto grid h-12 w-12 place-items-center rounded-lg bg-primary/10 text-primary">
             {uploading ? <Loader2 className="h-6 w-6 animate-spin" /> : <Upload className="h-6 w-6" />}
           </div>
-          <p className="mt-3 font-medium">{uploading ? "Working on it…" : "Drop files or click to upload"}</p>
+          <p className="mt-3 font-medium">{uploading ? "Working on it…" : "Add to your library"}</p>
           <p className="mt-1 text-xs text-muted-foreground">
             {uploading ? progress : "PDF · DOCX · TXT · MD"}
           </p>
         </div>
 
-        <div className="mt-8 space-y-2">
+        <div className="mt-8 flex items-center justify-between border-b border-border pb-4"><h2 className="flex items-center gap-2 text-sm font-medium"><Library className="size-4 text-primary" /> All documents <span className="text-muted-foreground">({docs.length})</span></h2><span className="flex items-center gap-1.5 text-xs text-muted-foreground"><ShieldCheck className="size-3.5" /> Private</span></div>
+        <div className="mt-4 space-y-2">
           {docs.map((d) => (
-            <div key={d.id} className="flex items-center gap-3 rounded-lg border border-border bg-card px-4 py-3">
+            <div key={d.id} className="flex flex-wrap items-center gap-3 rounded-lg border border-border bg-card px-4 py-3">
               <FileText className="h-5 w-5 text-muted-foreground" />
-              <div className="min-w-0 flex-1">
+              <div className="min-w-0 flex-1 basis-32">
                 <div className="truncate font-medium">{d.filename}</div>
                 <div className="text-xs text-muted-foreground">
                   {(d.file_size / 1024).toFixed(1)} KB · {d.chunk_count} chunks ·{" "}
@@ -138,7 +145,7 @@ export function DocumentsPage() {
                 </div>
               </div>
               {d.status === "ready" ? (
-                <span className="flex items-center gap-1 text-xs text-emerald-600">
+                <span className="flex items-center gap-1 text-xs text-success">
                   <CheckCircle2 className="h-4 w-4" /> Ready
                 </span>
               ) : d.status === "failed" ? (
@@ -150,14 +157,14 @@ export function DocumentsPage() {
                   <Loader2 className="h-3 w-3 animate-spin" /> Processing
                 </span>
               )}
-              <Button variant="ghost" size="icon" onClick={() => del(d.id)}>
+              <Button aria-label={`Delete ${d.filename}`} title="Delete document" variant="ghost" size="icon" onClick={() => del(d.id)}>
                 <Trash2 className="h-4 w-4" />
               </Button>
             </div>
           ))}
           {docs.length === 0 && (
             <p className="rounded-lg border border-dashed border-border p-6 text-center text-sm text-muted-foreground">
-              No documents yet. Upload one above to start chatting with your library.
+              Your library is ready for its first document.
             </p>
           )}
         </div>
