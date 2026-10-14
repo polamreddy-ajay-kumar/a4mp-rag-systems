@@ -1,10 +1,11 @@
+import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { askQuestion } from "@/lib/rag.functions";
 import { useServerFn } from "@tanstack/react-start";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Loader2, Send, Sparkles, FileText } from "lucide-react";
+import { Loader2, ArrowUp, Sparkles, FileText, ArrowUpRight, ScanText, ListChecks, Languages, Layers3 } from "lucide-react";
 import { toast } from "sonner";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -87,17 +88,16 @@ export function ChatWindow({ conversationId }: { conversationId: string }) {
   return (
     <>
       <div ref={scrollRef} className="flex-1 overflow-y-auto">
-        <div className="mx-auto max-w-3xl px-6 py-8">
+        <div className="mx-auto max-w-3xl px-4 py-8 sm:px-8">
           {messages.length === 0 && (
-            <div className="rounded-2xl border border-border bg-card p-10 text-center">
-              <div className="mx-auto grid h-12 w-12 place-items-center rounded-xl bg-accent/15 text-accent">
-                <Sparkles className="h-6 w-6" />
+            <div className="page-enter py-8 sm:py-16">
+              <div className="mb-6 inline-flex items-center gap-2 text-xs text-primary"><Layers3 className="size-5" /> YOUR PERSONAL INTELLIGENCE</div>
+              <h1 className="text-3xl font-medium leading-tight sm:text-4xl">What would you like<br />to understand?</h1>
+              <p className="mt-4 text-sm text-muted-foreground">Clarity begins with a good question.</p>
+              <div className="mt-9 grid gap-3 sm:grid-cols-3">
+                {[{ icon: ScanText, label: "Find the key ideas", query: "What are the key ideas in my documents?" }, { icon: ListChecks, label: "Connect the details", query: "Compare the main points across my documents." }, { icon: Languages, label: "తెలుగులో అడగండి", query: "నా పత్రాలలో ముఖ్యమైన విషయాలను తెలుగులో వివరించండి." }].map(({ icon: Icon, label, query }) => <Button key={label} variant="outline" className="h-auto min-h-24 flex-col items-start whitespace-normal bg-card p-4 text-left" onClick={() => { setInput(query); inputRef.current?.focus(); }}><Icon className="text-primary" /><span className="text-xs font-normal">{label}</span></Button>)}
               </div>
-              <h2 className="mt-4 text-2xl font-semibold">Ask your library</h2>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Upload documents on the Documents page, then ask anything. Answers cite the exact
-                chunks used. Works in English and Telugu.
-              </p>
+              <Button asChild variant="link" className="mt-5 px-0 text-xs text-muted-foreground"><Link to="/documents"><FileText /> Document library <ArrowUpRight /></Link></Button>
             </div>
           )}
 
@@ -114,9 +114,9 @@ export function ChatWindow({ conversationId }: { conversationId: string }) {
         </div>
       </div>
 
-      <div className="border-t border-border bg-background/70 backdrop-blur">
-        <div className="mx-auto max-w-3xl px-6 py-4">
-          <div className="flex items-end gap-2 rounded-xl border border-border bg-card p-2 shadow-sm focus-within:ring-2 focus-within:ring-ring">
+      <div className="bg-background">
+        <div className="mx-auto max-w-3xl px-4 pb-5 pt-3 sm:px-8">
+          <div className="flex items-end gap-2 rounded-lg border border-border bg-card p-2 shadow-sm focus-within:ring-2 focus-within:ring-ring">
             <Textarea
               ref={inputRef}
               value={input}
@@ -127,13 +127,15 @@ export function ChatWindow({ conversationId }: { conversationId: string }) {
                   void send();
                 }
               }}
-              placeholder="Ask about your documents… (Shift+Enter for newline)"
+              placeholder="Ask your library…"
+              aria-label="Your question"
               className="min-h-[52px] resize-none border-0 focus-visible:ring-0 shadow-none"
             />
-            <Button onClick={send} disabled={busy || !input.trim()} size="icon" className="shrink-0">
-              {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
+            <Button aria-label="Send question" title="Send question" onClick={send} disabled={busy || !input.trim()} size="icon" className="shrink-0">
+              {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <ArrowUp className="h-4 w-4" />}
             </Button>
           </div>
+          <p className="mt-3 text-center text-[10px] text-muted-foreground">A4MP RAG SYSTEMS · English + తెలుగు</p>
         </div>
       </div>
     </>
@@ -147,15 +149,15 @@ function MessageBubble({ message }: { message: Msg }) {
       <div
         className={
           isUser
-            ? "max-w-[85%] rounded-2xl rounded-br-sm bg-primary px-4 py-3 text-primary-foreground shadow-sm"
-            : "max-w-[95%] rounded-2xl rounded-bl-sm bg-card border border-border px-5 py-4 shadow-sm"
+            ? "max-w-[85%] rounded-lg rounded-br-sm bg-primary px-4 py-3 text-primary-foreground shadow-sm"
+            : "max-w-[95%] rounded-lg px-1 py-2"
         }
       >
         {isUser ? (
           <p className="whitespace-pre-wrap text-sm">{message.content}</p>
         ) : (
           <>
-            <div className="prose prose-sm max-w-none prose-p:my-2 prose-headings:mt-4">
+            <div className="markdown-answer text-sm">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>{message.content}</ReactMarkdown>
             </div>
             {message.citations && message.citations.length > 0 && (
