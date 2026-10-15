@@ -26,8 +26,8 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
-  --font-sans: "Manrope", sans-serif;
-  --font-display: "Space Grotesk", sans-serif;
+  --font-sans: "Dancing Script", "Dhurjati", cursive;
+  --font-display: "Dancing Script", "Dhurjati", cursive;
   --color-success: var(--success);
   --color-hero-foreground: var(--hero-foreground);
   --color-hero-muted: var(--hero-muted);
@@ -107,8 +107,9 @@
 
 @layer base {
   * { border-color: var(--color-border); letter-spacing: 0; }
-  body { background: var(--background); color: var(--foreground); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
-  h1, h2, h3 { font-family: var(--font-display); }
+  html { font-size: 18px; }
+  body { background: var(--background); color: var(--foreground); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; font-size: 1rem; }
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 600; }
   ::selection { background: var(--accent); color: var(--foreground); }
 }
 
