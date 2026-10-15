@@ -28,7 +28,7 @@ function Landing() {
         <div className="relative mx-auto max-w-7xl px-5 py-9 sm:px-8 sm:py-16 lg:py-20">
           <div className="page-enter max-w-xl">
             <div className="mb-7 flex items-center gap-2 text-xs font-medium text-primary"><span className="size-1.5 rounded-full bg-primary" /> PERSONAL KNOWLEDGE INTELLIGENCE</div>
-            <h1 className="text-4xl font-medium leading-[1.12] text-hero-foreground sm:text-6xl">A4MP<br />RAG SYSTEMS<span className="text-primary">.</span></h1>
+            <img src={brandLogo} alt="A4MP RAG SYSTEMS" width={1804} height={370} className="h-20 w-auto sm:h-28 lg:h-32" />
             <p className="mt-6 max-w-sm text-base leading-relaxed text-hero-muted sm:text-lg">Your documents. Connected.<br />Your answers. Grounded.</p>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-hero-muted">A private space to turn your personal library into clear, source-backed understanding.</p>
             <div className="mt-8 flex flex-wrap gap-3">
