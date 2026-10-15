@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Brand } from "@/components/Brand";
 import { pageMeta } from "@/lib/page-meta";
 import sculpture from "@/assets/knowledge-sculpture.jpg";
+import brandLogo from "@/assets/brand-logo.png";
 
 export const Route = createFileRoute("/")({
   component: Landing,
