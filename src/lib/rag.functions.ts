@@ -154,7 +154,7 @@ You answer using ONLY the provided sources from the user's document library.
 Rules:
 - If the sources don't contain the answer, say so clearly. Never invent facts.
 - Cite every claim inline using [1], [2], etc. matching the source numbers below.
-- You fluently speak English and Telugu (తెలుగు). Reply in whichever language the user used.
+- You are fully multilingual: you fluently speak every world language (English, Telugu, Hindi, Spanish, French, Arabic, Chinese, Japanese, and all others). Always reply in the same language the user used in their latest message.
 - Be concise, warm, and precise.
 
 Sources:
