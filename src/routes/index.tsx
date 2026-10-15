@@ -7,7 +7,7 @@ import sculpture from "@/assets/knowledge-sculpture.jpg";
 
 export const Route = createFileRoute("/")({
   component: Landing,
-  head: () => pageMeta("Your personal knowledge, connected", "A4MP RAG SYSTEMS — private document intelligence with cited answers in English and Telugu."),
+  head: () => pageMeta("Your personal knowledge, connected", "A4MP RAG SYSTEMS — private document intelligence with cited answers in every world language."),
 });
 
 function Landing() {
@@ -34,19 +34,19 @@ function Landing() {
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild size="lg"><Link to="/auth" search={{ mode: "signup" }}>Create your workspace <ArrowUpRight /></Link></Button>
             </div>
-            <div className="mt-6 flex flex-wrap items-center gap-4 text-xs text-hero-muted"><span className="flex items-center gap-1.5"><ShieldCheck className="size-3.5" /> Private by design</span><span>English + తెలుగు</span></div>
+            <div className="mt-6 flex flex-wrap items-center gap-4 text-xs text-hero-muted"><span className="flex items-center gap-1.5"><ShieldCheck className="size-3.5" /> Private by design</span><span>Every world language</span></div>
           </div>
         </div>
       </section>
       <section className="border-b border-border">
         <div className="mx-auto grid max-w-7xl grid-cols-2 gap-y-5 px-5 py-7 sm:grid-cols-4 sm:px-8">
-          {["PDF, Word & text", "Source-backed answers", "English + Telugu", "Your private library"].map(t => <div key={t} className="flex items-center gap-2 text-xs text-muted-foreground sm:text-sm"><Check className="size-4 shrink-0 text-primary" />{t}</div>)}
+          {["PDF, Word & text", "Source-backed answers", "Every world language", "Your private library"].map(t => <div key={t} className="flex items-center gap-2 text-xs text-muted-foreground sm:text-sm"><Check className="size-4 shrink-0 text-primary" />{t}</div>)}
         </div>
       </section>
       <section className="mx-auto max-w-7xl px-5 py-14 sm:px-8 sm:py-20">
         <div className="mb-9 flex flex-wrap items-end justify-between gap-5"><div><p className="mb-3 text-xs text-primary">BUILT AROUND YOUR KNOWLEDGE</p><h2 className="text-2xl font-medium sm:text-3xl">Less searching. More understanding.</h2></div><Button asChild variant="link" className="px-0"><Link to="/auth">Enter workspace <ArrowUpRight /></Link></Button></div>
         <div className="grid gap-4 md:grid-cols-3">
-          {[{ icon: FileText, number: "01", title: "One connected library", text: "Keep your reports, research and notes together in your own private collection." }, { icon: ScanText, number: "02", title: "Answers with evidence", text: "See the source behind each answer. Go deeper with references to your original documents." }, { icon: Languages, number: "03", title: "Think in your language", text: "Continue the conversation in English or Telugu, with your chat history always close by." }].map(({ icon: Icon, number, title, text }) => <article key={number} className="rounded-lg border border-border bg-card p-6"><div className="flex items-center justify-between"><Icon className="size-6 text-primary" /><span className="font-display text-xs text-muted-foreground">{number}</span></div><h3 className="mt-8 text-lg font-medium">{title}</h3><p className="mt-3 text-sm leading-7 text-muted-foreground">{text}</p></article>)}
+          {[{ icon: FileText, number: "01", title: "One connected library", text: "Keep your reports, research and notes together in your own private collection." }, { icon: ScanText, number: "02", title: "Answers with evidence", text: "See the source behind each answer. Go deeper with references to your original documents." }, { icon: Languages, number: "03", title: "Think in your language", text: "Continue the conversation in any world language — English, Telugu, Hindi and more — with your chat history always close by." }].map(({ icon: Icon, number, title, text }) => <article key={number} className="rounded-lg border border-border bg-card p-6"><div className="flex items-center justify-between"><Icon className="size-6 text-primary" /><span className="font-display text-xs text-muted-foreground">{number}</span></div><h3 className="mt-8 text-lg font-medium">{title}</h3><p className="mt-3 text-sm leading-7 text-muted-foreground">{text}</p></article>)}
         </div>
       </section>
       <footer className="border-t border-border"><div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-5 py-6 sm:px-8"><Brand /><p className="text-xs text-muted-foreground">Personal knowledge. Meaningful intelligence.</p></div></footer>

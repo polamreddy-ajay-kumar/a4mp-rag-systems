@@ -135,7 +135,7 @@ export function ChatWindow({ conversationId }: { conversationId: string }) {
               {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <ArrowUp className="h-4 w-4" />}
             </Button>
           </div>
-          <p className="mt-3 text-center text-[10px] text-muted-foreground">A4MP RAG SYSTEMS · English + తెలుగు</p>
+          <p className="mt-3 text-center text-[10px] text-muted-foreground">A4MP RAG SYSTEMS · Every world language</p>
         </div>
       </div>
     </>
