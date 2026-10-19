@@ -71,7 +71,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <Button asChild variant="ghost" className={cn("w-full justify-start text-muted-foreground", currentPath.startsWith("/app") && "bg-sidebar-accent text-foreground")}><Link to="/app"><MessageSquare /> Workspace</Link></Button>
           <Button asChild variant="ghost" className={cn("w-full justify-start text-muted-foreground", currentPath.startsWith("/documents") && "bg-sidebar-accent text-foreground")}><Link to="/documents"><Files /> Document library</Link></Button>
         </nav>
-        <div className="mx-5 mt-6 flex items-center justify-between border-t border-sidebar-border pt-6 pb-3 text-[10px] font-medium text-muted-foreground"><span>RECENT CONVERSATIONS</span><span>{convos.length.toString().padStart(2, "0")}</span></div>
+        <div className="mx-5 mt-6 flex items-center justify-between border-t border-sidebar-border pt-6 pb-3 text-[10px] font-medium text-muted-foreground"><span>Recent conversations</span><span>{convos.length.toString().padStart(2, "0")}</span></div>
         <div className="flex-1 space-y-1 overflow-y-auto px-3">
           {convos.map((c) => <div key={c.id} className={cn("group flex items-center rounded-md text-sm hover:bg-sidebar-accent", currentPath.endsWith(c.id) && "bg-sidebar-accent")}>
             <Link to="/app/$conversationId" params={{ conversationId: c.id }} className="flex min-w-0 flex-1 items-center gap-2 px-3 py-2.5"><MessageSquare className="size-3.5 shrink-0 text-muted-foreground" /><span className="truncate">{c.title || "Untitled"}</span></Link>
@@ -85,7 +85,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <main className="flex min-w-0 flex-1 flex-col overflow-hidden">
         <header className="flex h-16 shrink-0 items-center justify-between gap-3 border-b border-border px-4 sm:px-8">
           <div className="flex min-w-0 items-center gap-3"><Button variant="ghost" size="icon" aria-label="Open menu" onClick={() => setMenuOpen(true)} className="md:hidden"><Menu /></Button><span className="hidden text-xs text-muted-foreground sm:inline">Workspace</span><ChevronRight className="hidden size-3 text-muted-foreground sm:block" /><span className="truncate text-sm font-medium">{currentPath.startsWith("/documents") ? "Document library" : "Knowledge chat"}</span></div>
-          <span className="flex shrink-0 items-center gap-2 text-[10px] text-muted-foreground sm:text-xs"><span className="size-1.5 rounded-full bg-primary" /> A4MP RAG SYSTEMS</span>
+          <span className="flex shrink-0 items-center gap-2 text-[10px] text-muted-foreground sm:text-xs"><span className="size-1.5 rounded-full bg-primary" /> A4MP Rag Systems</span>
         </header>
         {children}
       </main>

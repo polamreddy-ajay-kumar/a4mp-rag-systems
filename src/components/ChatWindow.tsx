@@ -91,7 +91,7 @@ export function ChatWindow({ conversationId }: { conversationId: string }) {
         <div className="mx-auto max-w-3xl px-4 py-8 sm:px-8">
           {messages.length === 0 && (
             <div className="page-enter py-8 sm:py-16">
-              <div className="mb-6 inline-flex items-center gap-2 text-xs text-primary"><Layers3 className="size-5" /> YOUR PERSONAL INTELLIGENCE</div>
+              <div className="mb-6 inline-flex items-center gap-2 text-xs text-primary"><Layers3 className="size-5" /> Your personal intelligence</div>
               <h1 className="text-3xl font-medium leading-tight sm:text-4xl">What would you like<br />to understand?</h1>
               <p className="mt-4 text-sm text-muted-foreground">Clarity begins with a good question.</p>
               <div className="mt-9 grid gap-3 sm:grid-cols-3">
@@ -135,7 +135,7 @@ export function ChatWindow({ conversationId }: { conversationId: string }) {
               {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <ArrowUp className="h-4 w-4" />}
             </Button>
           </div>
-          <p className="mt-3 text-center text-[10px] text-muted-foreground">A4MP RAG SYSTEMS · Every world language</p>
+          <p className="mt-3 text-center text-[10px] text-muted-foreground">A4MP Rag Systems · Every world language</p>
         </div>
       </div>
     </>
@@ -162,7 +162,7 @@ function MessageBubble({ message }: { message: Msg }) {
             </div>
             {message.citations && message.citations.length > 0 && (
               <div className="mt-4 border-t border-border pt-3">
-                <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                <div className="mb-2 text-xs font-semibold text-muted-foreground">
                   Sources
                 </div>
                 <div className="space-y-2">

@@ -28,7 +28,7 @@ function Landing() {
         <div className="hero-shade" />
         <div className="relative mx-auto max-w-7xl px-5 py-9 sm:px-8 sm:py-16 lg:py-20">
           <div className="page-enter max-w-xl">
-            <div className="mb-7 flex items-center gap-2 text-xs font-medium text-primary"><span className="size-1.5 rounded-full bg-primary" /> PERSONAL KNOWLEDGE INTELLIGENCE</div>
+            <div className="mb-7 flex items-center gap-2 text-xs font-medium text-primary"><span className="size-1.5 rounded-full bg-primary" /> Personal knowledge intelligence</div>
             <img src={brandLogo} alt="A4MP RAG SYSTEMS" width={1804} height={370} className="h-20 w-auto sm:h-28 lg:h-32" />
             <p className="mt-6 max-w-sm text-base leading-relaxed text-hero-muted sm:text-lg">Your documents. Connected.<br />Your answers. Grounded.</p>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-hero-muted">A private space to turn your personal library into clear, source-backed understanding.</p>
@@ -45,7 +45,7 @@ function Landing() {
         </div>
       </section>
       <section className="mx-auto max-w-7xl px-5 py-14 sm:px-8 sm:py-20">
-        <div className="mb-9 flex flex-wrap items-end justify-between gap-5"><div><p className="mb-3 text-xs text-primary">BUILT AROUND YOUR KNOWLEDGE</p><h2 className="text-2xl font-medium sm:text-3xl">Less searching. More understanding.</h2></div><Button asChild variant="link" className="px-0"><Link to="/auth">Enter workspace <ArrowUpRight /></Link></Button></div>
+        <div className="mb-9 flex flex-wrap items-end justify-between gap-5"><div><p className="mb-3 text-xs text-primary">Built around your knowledge</p><h2 className="text-2xl font-medium sm:text-3xl">Less searching. More understanding.</h2></div><Button asChild variant="link" className="px-0"><Link to="/auth">Enter workspace <ArrowUpRight /></Link></Button></div>
         <div className="grid gap-4 md:grid-cols-3">
           {[{ icon: FileText, number: "01", title: "One connected library", text: "Keep your reports, research and notes together in your own private collection." }, { icon: ScanText, number: "02", title: "Answers with evidence", text: "See the source behind each answer. Go deeper with references to your original documents." }, { icon: Languages, number: "03", title: "Think in your language", text: "Continue the conversation in any world language — English, Telugu, Hindi and more — with your chat history always close by." }].map(({ icon: Icon, number, title, text }) => <article key={number} className="rounded-lg border border-border bg-card p-6"><div className="flex items-center justify-between"><Icon className="size-6 text-primary" /><span className="font-display text-xs text-muted-foreground">{number}</span></div><h3 className="mt-8 text-lg font-medium">{title}</h3><p className="mt-3 text-sm leading-7 text-muted-foreground">{text}</p></article>)}
         </div>
