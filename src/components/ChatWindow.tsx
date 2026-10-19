@@ -162,7 +162,7 @@ function MessageBubble({ message }: { message: Msg }) {
             </div>
             {message.citations && message.citations.length > 0 && (
               <div className="mt-4 border-t border-border pt-3">
-                <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                <div className="mb-2 text-xs font-semibold text-muted-foreground">
                   Sources
                 </div>
                 <div className="space-y-2">
