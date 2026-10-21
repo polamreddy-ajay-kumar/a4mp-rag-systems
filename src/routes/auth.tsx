@@ -7,10 +7,11 @@ import { lovable } from "@/integrations/lovable";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ArrowLeft, ArrowUpRight, ShieldCheck, Loader2 } from "lucide-react";
+import { ArrowLeft, ShieldCheck, Loader2, Sparkles } from "lucide-react";
 
 import { Brand } from "@/components/Brand";
 import { pageMeta } from "@/lib/page-meta";
+import nebula from "@/assets/nebula-smoke.jpg";
 
 const searchSchema = z.object({ mode: z.enum(["signin", "signup"]).optional() });
 
@@ -75,66 +76,102 @@ function AuthPage() {
   };
 
   return (
-    <div className="min-h-screen grid place-items-center bg-background px-5 py-10">
-      <div className="w-full max-w-sm space-y-6">
-        <Link to="/" className="flex justify-center"><Brand /></Link>
-        <div className="flex justify-center"><Button asChild variant="ghost" size="sm"><Link to="/"><ArrowLeft /> Back to home</Link></Button></div>
+    <div className="relative min-h-screen overflow-hidden bg-background">
+      <div className="cinematic-bg" aria-hidden="true">
+        <img src={nebula} alt="" width={1920} height={1280} loading="lazy" className="cinematic-media" />
+        <div className="cinematic-stars" />
+        <div className="cinematic-vignette" />
+      </div>
 
-        <div className="rounded-lg border border-border bg-card p-6 sm:p-8">
-          <h1 className="text-xl font-semibold">
-            {mode === "signup" ? "Create your account" : "Welcome back"}
-          </h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            {mode === "signup"
-              ? "Your personal knowledge starts here."
-              : "Sign in to keep chatting with your documents."}
-          </p>
+      <div className="relative z-10 grid min-h-screen place-items-center px-5 py-10">
+        <div className="w-full max-w-sm space-y-5">
+          <Link to="/" className="flex justify-center"><Brand /></Link>
+          <div className="flex justify-center"><Button asChild variant="ghost" size="sm"><Link to="/"><ArrowLeft /> Back to home</Link></Button></div>
 
-          <Button type="button" variant="outline" className="mt-6 w-full" onClick={google} disabled={busy}>
-            Continue with Google
-          </Button>
+          <div className="neon-panel p-6 sm:p-8">
+            <h1 className="text-aurora text-center text-3xl leading-tight">
+              {mode === "signup" ? "Create your workspace" : "Welcome back"}
+            </h1>
+            <p className="mt-2 text-center text-sm text-muted-foreground">
+              {mode === "signup"
+                ? "Your personal knowledge starts here."
+                : "Sign in to keep chatting with your documents."}
+            </p>
 
-          <div className="relative my-6 text-center text-xs text-muted-foreground">
-            <span className="bg-card px-2 relative z-10">or</span>
-            <div className="absolute inset-x-0 top-1/2 h-px bg-border" />
-          </div>
-
-          <form onSubmit={submit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                required
-                minLength={6}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                autoComplete={mode === "signup" ? "new-password" : "current-password"}
-              />
-            </div>
-            <Button type="submit" className="w-full" disabled={busy}>
-              {busy && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              {mode === "signup" ? "Create account" : "Sign in"}
-            </Button>
-          </form>
-
-          <p className="mt-6 text-center text-sm text-muted-foreground">
-            {mode === "signup" ? "Already have an account?" : "New here?"}{" "}
-            <Button
-              variant="link"
+            <button
               type="button"
-              className="h-auto p-0 font-medium"
-              onClick={() => setMode(mode === "signup" ? "signin" : "signup")}
+              onClick={google}
+              disabled={busy}
+              className="neon-frame mt-6 flex h-12 w-full items-center justify-center gap-3 text-lg text-foreground hover:text-glow-cyan"
             >
-              {mode === "signup" ? "Sign in" : "Create an account"}
-            </Button>
-          </p>
+              <svg className="size-5" viewBox="0 0 24 24" aria-hidden="true"><path fill="#EA4335" d="M12 5.3c1.7 0 3.2.6 4.4 1.7l3.3-3.3C17.6 1.8 15 .7 12 .7 7.4.7 3.4 3.3 1.5 7.1l3.9 3C6.3 7.3 8.9 5.3 12 5.3z"/><path fill="#4285F4" d="M23.3 12.3c0-.8-.1-1.6-.2-2.3H12v4.4h6.4c-.3 1.5-1.1 2.7-2.4 3.6l3.8 2.9c2.2-2 3.5-5 3.5-8.6z"/><path fill="#FBBC05" d="M5.4 13.9a6.9 6.9 0 0 1 0-4.6l-3.9-3a11.6 11.6 0 0 0 0 10.6l3.9-3z"/><path fill="#34A853" d="M12 23.3c3 0 5.6-1 7.5-2.7l-3.8-2.9c-1 .7-2.3 1.1-3.7 1.1-3.1 0-5.7-2-6.6-4.9l-3.9 3c1.9 3.8 5.9 6.4 10.5 6.4z"/></svg>
+              Continue with Google
+            </button>
+
+            <div className="my-6 flex items-center gap-3 text-sm text-muted-foreground">
+              <span className="h-px flex-1 bg-gradient-to-r from-transparent to-glow-violet/60" />
+              <Sparkles className="size-4 text-glow-gold" />
+              <span>or continue with</span>
+              <Sparkles className="size-4 text-glow-gold" />
+              <span className="h-px flex-1 bg-gradient-to-l from-transparent to-glow-violet/60" />
+            </div>
+
+            <form onSubmit={submit} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="email" className="text-glow-cyan">Email</Label>
+                <div className="neon-frame">
+                  <Input
+                    id="email"
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    autoComplete="email"
+                    placeholder="you@email.com"
+                    className="h-12 rounded-full border-0 bg-transparent px-5 text-center text-base shadow-none placeholder:text-center focus-visible:border-0 focus-visible:ring-0"
+                  />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="password" className="text-glow-gold">Password</Label>
+                <div className="neon-frame">
+                  <Input
+                    id="password"
+                    type="password"
+                    required
+                    minLength={6}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    autoComplete={mode === "signup" ? "new-password" : "current-password"}
+                    placeholder="••••••••"
+                    className="h-12 rounded-full border-0 bg-transparent px-5 text-center text-base shadow-none placeholder:text-center focus-visible:border-0 focus-visible:ring-0"
+                  />
+                </div>
+              </div>
+              <button
+                type="submit"
+                disabled={busy}
+                className="gold-btn flex h-14 w-full items-center justify-center gap-2 rounded-full text-xl"
+              >
+                {busy && <Loader2 className="size-5 animate-spin" />}
+                {mode === "signup" ? "Create account" : "Sign in"}
+              </button>
+            </form>
+
+            <p className="mt-6 text-center text-sm text-muted-foreground">
+              {mode === "signup" ? "Already have an account?" : "New here?"}{" "}
+              <Button
+                variant="link"
+                type="button"
+                className="h-auto p-0 font-medium text-glow-cyan"
+                onClick={() => setMode(mode === "signup" ? "signin" : "signup")}
+              >
+                {mode === "signup" ? "Sign in" : "Create an account"}
+              </Button>
+            </p>
+          </div>
+          <p className="flex items-center justify-center gap-2 text-xs text-muted-foreground"><ShieldCheck className="size-3.5 text-glow-cyan" /> Your library stays private.</p>
         </div>
-        <p className="flex items-center justify-center gap-2 text-xs text-muted-foreground"><ShieldCheck className="size-3.5" /> Your library stays private.</p>
       </div>
     </div>
   );
