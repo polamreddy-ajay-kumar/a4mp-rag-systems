@@ -3,7 +3,7 @@ import { ArrowUpRight, ArrowRight, FileText, ScanText, Languages, ShieldCheck, C
 import { Button } from "@/components/ui/button";
 import { Brand } from "@/components/Brand";
 import { pageMeta } from "@/lib/page-meta";
-import sculpture from "@/assets/knowledge-sculpture.jpg";
+import nebula from "@/assets/nebula-smoke.jpg";
 import brandLogo from "@/assets/brand-logo.png";
 
 export const Route = createFileRoute("/")({
@@ -24,13 +24,13 @@ function Landing() {
         </div>
       </header>
       <section className="relative isolate overflow-hidden border-b border-border">
-        <img src={sculpture} alt="Precision glass architecture with illuminated emerald layers" width={1536} height={1024} className="hero-media" />
+        <img src={nebula} alt="Colorful cosmic nebula smoke" width={1920} height={1280} className="hero-media hero-drift" />
         <div className="hero-shade" />
         <div className="relative mx-auto max-w-7xl px-5 py-9 sm:px-8 sm:py-16 lg:py-20">
           <div className="page-enter max-w-xl">
             <div className="mb-7 flex items-center gap-2 text-xs font-medium text-primary"><span className="size-1.5 rounded-full bg-primary" /> Personal knowledge intelligence</div>
             <img src={brandLogo} alt="A4MP RAG SYSTEMS" width={1804} height={370} className="h-20 w-auto sm:h-28 lg:h-32" />
-            <p className="mt-6 max-w-sm text-base leading-relaxed text-hero-muted sm:text-lg">Your documents. Connected.<br />Your answers. Grounded.</p>
+            <p className="text-aurora mt-6 max-w-sm text-2xl leading-relaxed sm:text-3xl">Your documents. Connected.<br />Your answers. Grounded.</p>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-hero-muted">A private space to turn your personal library into clear, source-backed understanding.</p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild size="lg"><Link to="/auth" search={{ mode: "signup" }}>Create your workspace <ArrowUpRight /></Link></Button>
